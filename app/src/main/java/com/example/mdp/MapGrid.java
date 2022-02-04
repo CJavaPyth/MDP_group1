@@ -74,11 +74,11 @@ public class MapGrid extends View {
 
     public MapGrid(Context context, AttributeSet attrs){
         super(context, attrs);
-        whitePaint.setColor(Color.WHITE);
+        whitePaint.setColor(Color.parseColor("#4DBAD8"));
         whitePaint.setShadowLayer(border, 0, 0, Color.GRAY);
-        bluePaint.setColor(Color.BLUE);
+        bluePaint.setColor(Color.BLACK);
         blackPaint.setColor(Color.BLACK);
-        coordinatesPaint.setColor(Color.BLUE);
+        coordinatesPaint.setColor(Color.WHITE);
         coordinatesPaint.setTextSize(20);
         coordinatesPaint.setTextAlign(Paint.Align.CENTER);
         whiteNumber.setColor(Color.WHITE);

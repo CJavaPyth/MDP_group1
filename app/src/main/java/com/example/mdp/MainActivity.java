@@ -171,22 +171,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        Switch sw = (Switch) findViewById(R.id.tiltSwitch);
 
-        sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // The toggle is enabled
-                    tiltChk =true;
-                    onResume();
-                    gyroscope.register();
-                } else {
-                    // The toggle is disabled
-                    tiltChk=false;
-                    onPause();
-                }
-            }
-        });
 
             gyroscope.setListener(new Gyroscope.Listener() {
                 @Override

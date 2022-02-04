@@ -29,7 +29,8 @@
         android:theme="@style/Theme.MDP">
         <activity
             android:name=".MainActivity"
-            android:label="Group 1">
+            android:label="Group 1"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
