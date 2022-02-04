@@ -16,7 +16,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="125dp"
             android:layout_weight="1"
             android:background="@drawable/gradient_background">
 
@@ -168,25 +168,27 @@
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginEnd="5dp"
                         android:layout_weight="1"
+                        android:src="@drawable/ic_down_arrow"
                         android:text="@string/challenge1"
+                        android:textAllCaps="false"
+                        android:textColor="@color/grey"
                         android:textSize="11sp"
                         android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:textAllCaps="false"
-                        android:layout_marginEnd="5dp"
-                        android:src="@drawable/blue_button"/>
+                        tools:ignore="TouchTargetSizeCheck" />
 
                     <Button
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:src="@drawable/blue_button"
                         android:text="@string/challenge2"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
                         android:textSize="11sp"
                         android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:textAllCaps="false"
-                        android:src="@drawable/blue_button"/>
+                        tools:ignore="TouchTargetSizeCheck" />
 
                 </LinearLayout>
 
@@ -205,18 +207,18 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="2"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:background="@drawable/grey_box" >
+                        android:layout_weight="2"
+                        android:background="@drawable/rounded_corner"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/position"
-                            android:textColor="@color/dark_blue"
-                            android:textStyle="bold"
-                            android:textSize="11sp"/>
+                            android:textColor="@color/black"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -226,17 +228,17 @@
                             <RelativeLayout
                                 android:id="@+id/xLayout"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/x"
-                                    android:textStyle="bold"
-                                    android:textColor="@color/dark_blue"
-                                    android:textSize="12sp" />
+                                    android:textColor="@color/black"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:id="@+id/txtX"
@@ -244,7 +246,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_centerInParent="true"
                                     android:text="-"
-                                    android:textColor="@color/dark_blue"
+                                    android:textColor="@color/black"
                                     android:textSize="14sp"
                                     android:textStyle="bold" />
 
@@ -253,27 +255,27 @@
                             <RelativeLayout
                                 android:id="@+id/yLayout"
                                 android:layout_width="0dp"
-                                android:layout_weight="1"
                                 android:layout_height="wrap_content"
+                                android:layout_weight="1"
                                 android:orientation="vertical">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="@string/y"
-                                    android:textStyle="bold"
+                                    android:textColor="@color/black"
                                     android:textSize="12sp"
-                                    android:textColor="@color/dark_blue"/>
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:id="@+id/txtY"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="-"
-                                    android:textStyle="bold"
                                     android:layout_centerInParent="true"
+                                    android:text="-"
+                                    android:textColor="@color/black"
                                     android:textSize="14sp"
-                                    android:textColor="@color/dark_blue"/>
+                                    android:textStyle="bold" />
 
                             </RelativeLayout>
 
@@ -283,30 +285,30 @@
 
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:background="@drawable/grey_box"
                         android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp">
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/rounded_corner"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/direction"
-                            android:textColor="@color/dark_blue"
-                            android:textStyle="bold"
-                            android:textSize="11sp"/>
+                            android:textColor="@color/black"
+                            android:textSize="11sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:id="@+id/txtDirection"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:text="-"
-                            android:textColor="@color/dark_blue"
+                            android:textColor="@color/black"
                             android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:layout_gravity="center"/>
+                            android:textStyle="bold" />
 
                     </LinearLayout>
 
@@ -338,17 +340,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:orientation="vertical"
-                    android:background="@drawable/grey_box"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/rounded_corner"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:text="@string/robotStatus"
+                        android:textColor="@color/black"
                         android:textSize="11sp"
-                        android:textColor="@color/dark_blue"
-                        android:textStyle="bold"
-                        android:text="@string/robotStatus"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/txtRobotStatus"
@@ -362,10 +364,10 @@
                     android:id="@+id/sample_content_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
+                    android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
-                    android:background="@drawable/grey_box"
-                    android:orientation="vertical"
-                    android:layout_marginTop="5dp">
+                    android:background="@color/grey"
+                    android:orientation="vertical">
 
                 </FrameLayout>
 
