@@ -89,6 +89,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:text="@string/position"
                     android:textColor="@color/black"
                     android:textSize="11sp"
@@ -109,6 +110,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="5dp"
                             android:text="@string/x"
                             android:textColor="@color/black"
                             android:textSize="12sp"
@@ -168,6 +170,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:text="@string/direction"
                     android:textColor="@color/black"
                     android:textSize="11sp"
@@ -196,6 +199,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
                     android:text="@string/robotStatus"
                     android:textColor="@color/black"
                     android:textSize="11sp"
@@ -205,7 +209,11 @@
                     android:id="@+id/txtRobotStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center" />
+                    android:text="-"
+                    android:gravity="center"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
 
             </LinearLayout>
 
@@ -269,7 +277,8 @@
                             android:layout_alignParentTop="true"
                             android:layout_centerHorizontal="true"
                             android:background="@null"
-                            android:src="@drawable/ic_up_arrow" />
+                            android:src="@drawable/ic_up_arrow"
+                            />
 
                         <ImageButton
                             android:id="@+id/btnLeft"
@@ -346,7 +355,7 @@
                 <FrameLayout
                     android:id="@+id/sample_content_fragment"
                     android:layout_width="match_parent"
-                    android:layout_height="150dp"
+                    android:layout_height="249dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:background="@color/grey"

@@ -12,7 +12,7 @@
     <string name="receivedText">Received Text:</string>
 
     <!--  BluetoothChat -->
-    <string name="send"><font bgcolor = '#FFFFFF'>Send</font></string>
+    <string name="send"><font fgcolor = '#FFFFFF'>Send</font></string>
     <string name="not_connected">You are not connected to a device...</string>
     <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Leaving Bluetooth Chat.</string>
     <string name="title_connecting">connecting...</string>
