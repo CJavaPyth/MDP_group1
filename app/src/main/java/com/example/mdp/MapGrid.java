@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -95,7 +96,6 @@ public class MapGrid extends View {
         super.onDraw(canvas);
 
         calculateDimensions();
-
         // draw white area of canvas
         canvas.drawRoundRect(border, border, width - border - sidebar, height - border, 20, 20, whitePaint);
 
@@ -125,6 +125,7 @@ public class MapGrid extends View {
     }
 
     private void drawCoordinates(Canvas canvas){
+
         float offsetX = padding + border + cellWidth;
         float offsetY = padding + border;
         for (int i = 0; i <= numColumns; i++){

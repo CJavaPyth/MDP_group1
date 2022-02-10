@@ -45,10 +45,16 @@
 
             <Button
                 android:id="@+id/obstacleE"
+                style="@style/Widget.AppCompat.Button"
                 android:layout_width="100px"
                 android:layout_height="300px"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"/>
+                android:textColor="#FFEB3B"
+                android:textColorHighlight="#FFEB3B"
+                android:textColorHint="#FFEB3B"
+                android:textColorLink="#FFEB3B"
+                app:iconTint="#FFEB3B" />
 
         </RelativeLayout>
 

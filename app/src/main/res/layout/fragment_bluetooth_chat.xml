@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/orange_colour"
         android:text="@string/receivedText"
-        android:textColor="@color/dark_blue"
-        android:textStyle="bold"
-        android:textSize="11sp" />
+        android:textColor="@color/black"
+        android:textSize="11sp"
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/in"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@color/orange_colour"
         android:stackFromBottom="true"
         android:transcriptMode="alwaysScroll" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:background="@color/grey"
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/edit_text_out"
