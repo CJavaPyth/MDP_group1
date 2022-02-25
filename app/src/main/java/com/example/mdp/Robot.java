@@ -8,6 +8,7 @@ public class Robot implements ICoordinate{
     private String status;
     private char direction;
 
+    // the default robot direction and coordinates
     public Robot(){
         direction = 'N';
         x = -1;
@@ -28,9 +29,7 @@ public class Robot implements ICoordinate{
         return this.y;
     }
 
-    public void setY(int y){
-        this.y = y;
-    }
+    public void setY(int y){ this.y = y; }
 
     @Override
     public void setCoordinates(int x, int y) {
@@ -64,6 +63,8 @@ public class Robot implements ICoordinate{
     }
 
     public void moveRobotForward(){
+        // update robot position one block forward in the mapGrid
+
         char robotDir = getDirection();
         if (this.x != -1 && this.y != -1){
             if(robotDir == 'N'){
@@ -82,7 +83,7 @@ public class Robot implements ICoordinate{
                     this.setX(newX);
                 }
             }else{
-                //W
+                // robotDir == 'W'
                 int newX = this.x - 1;
                 if (newX >= 1){
                     this.setX(newX);
@@ -104,7 +105,7 @@ public class Robot implements ICoordinate{
                 this.setDirection('N');
             }
             else{
-                //W
+                // robotDir == 'W'
                 this.setDirection('S');
             }
         }
@@ -123,8 +124,8 @@ public class Robot implements ICoordinate{
                 this.setDirection('S');
             }
             else{
-                //W
-                this.setDirection('N');
+                // robotDir == 'W'
+                this .setDirection('N');
             }
         }
     }

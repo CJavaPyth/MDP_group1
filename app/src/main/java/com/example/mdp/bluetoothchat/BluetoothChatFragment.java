@@ -344,29 +344,39 @@ public class BluetoothChatFragment extends Fragment {
                     break;
                 case Constants.MESSAGE_READ:
                     byte[] readBuf = (byte[]) msg.obj;
-                    // construct a string from the valid bytes in the buffer
                     String readMessage = new String(readBuf, 0, msg.arg1);
-                    boolean messageIsCommand = false;
-                    if (readMessage.split(",")[0].equals("ROBOT")){
-                        String[] splitString = readMessage.split(",");
-                        if (splitString.length == 4 && isInteger(splitString[1]) && isInteger(splitString[2]) && splitString[3].length() == 1){
-                            if (MainActivity.setRobotPosition(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]), splitString[3].charAt(0))){
+                    readMessage = readMessage.trim();
+                    // Toast.makeText(activity, "Message :" + readMessage + String.valueOf(readBuf.length), Toast.LENGTH_SHORT).show();
+                    if (readBuf.length <= 30) {
+                        // construct a string from the valid bytes in the buffer
+
+                        boolean messageIsCommand = false;
+                        if (readMessage.split(",")[0].equals("ROBOT")) {
+                            String[] splitString = readMessage.split(",");
+                            if (splitString.length == 4 && isInteger(splitString[1]) && isInteger(splitString[2]) && splitString[3].length() == 1) {
+                                if (MainActivity.setRobotPosition(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]), splitString[3].charAt(0))) {
+                                    messageIsCommand = true;
+                                }
+                            } else if (splitString.length == 2) {
+                                MainActivity.updateRobotStatus(splitString[1]);
                                 messageIsCommand = true;
                             }
-                        } else if (splitString.length == 2){
-                            MainActivity.updateRobotStatus(splitString[1]);
+                        } else if (readMessage.split(",")[0].equals("TARGET")) {
+                            String[] splitString = readMessage.split(",");
+                            if (splitString.length == 3 && isInteger(splitString[1]) && isInteger(splitString[2])) {
+                                if (MainActivity.exploreTarget(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]))) {
+                                    messageIsCommand = true;
+                                }
+                            }
+                        } else if (readMessage.split(",")[0].equals("SEEN")) {
+                            String[] splitString = readMessage.split(",");
+                            MainActivity.updateImage(splitString[1]);
                             messageIsCommand = true;
+
                         }
-                    } else if (readMessage.split(",")[0].equals("TARGET")){
-                        String[] splitString = readMessage.split(",");
-                        if (splitString.length == 3 && isInteger(splitString[1]) && isInteger(splitString[2])){
-                            if (MainActivity.exploreTarget(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]))){
-                                messageIsCommand = true;
-                            }
+                        if (!messageIsCommand) {
+                            mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
                         }
-                    }
-                    if (!messageIsCommand){
-                        mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
                     }
                     break;
                 case Constants.MESSAGE_DEVICE_NAME:

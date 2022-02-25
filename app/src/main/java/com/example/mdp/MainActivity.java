@@ -40,13 +40,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
     static Robot robot = new Robot();
-    private Gyroscope gyroscope;
     MutableLiveData<String> listen = new MutableLiveData<>();
     public static TextView txtX;
     public static TextView txtY;
     public static TextView txtDir;
     public static TextView txtRobotStatus;
-    public boolean tiltChk = false;
+    public static TextView txtImage;
     private static MapGrid mapGrid;
     BluetoothChatFragment fragment;
 
@@ -58,26 +57,28 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         listen.setValue("Default");
-        gyroscope = new Gyroscope(this);
-
-        //drawing of map grid
+        // Drawing of map grid
         mapGrid = findViewById(R.id.map);
 
-        //Update Robot Pos
+        // Update Robot Pos
         txtX = findViewById(R.id.txtX);
         txtY = findViewById(R.id.txtY);
 
-        //Update Robot Direction
+        // Update Robot Direction
         txtDir = findViewById(R.id.txtDirection);
 
-        //Update Robot Status
+        // Update Robot Status
         txtRobotStatus = findViewById(R.id.txtRobotStatus);
 
+        txtImage = findViewById(R.id.txtImage);
+
         // Remove shadow of action bar
-        getSupportActionBar().setElevation(0);
-        // Set layout to shift up when soft keyboard is open
+        // getSupportActionBar().setElevation(0);
+
+        // Set layout to shift up when keyboard is open
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
+        // Establish BT connection
         if (savedInstanceState == null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             fragment = new BluetoothChatFragment();
@@ -85,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             transaction.commit();
         }
 
-        //To move forward
+        // To move forward
         findViewById(R.id.btnUp).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -93,19 +94,27 @@ public class MainActivity extends AppCompatActivity {
                     mapGrid.invalidate();
                     String navi = null;
                     navi = "f";
+
+                    // Send message 'tr' via BT
                     outgoingMessage(navi);
                     //fragment.sendMsg("f");
                     //printMessage("F|");
 //                    String navi = "F|";
 //                    byte[] bytes = navi.getBytes(Charset.defaultCharset());
 //                    BluetoothChatService.write(bytes);
+
+                    // Show Popup message
                     Toast.makeText(MainActivity.this, "Move forward",
                         Toast.LENGTH_SHORT).show();
                     if (robot.getX() != -1 && robot.getY() != -1) {
+
+                        // Show coordinates and direction in textView
                         txtX.setText(String.valueOf(robot.getX()));
                         txtY.setText(String.valueOf(robot.getY()));
                         txtDir.setText(String.valueOf(robot.getDirection()));
                     } else {
+
+                        // Show -- in textView
                         txtX.setText("-");
                         txtY.setText("-");
                         txtDir.setText("-");
@@ -114,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Turn left
+        // Turn left
         findViewById(R.id.btnLeft).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,19 +131,27 @@ public class MainActivity extends AppCompatActivity {
                 mapGrid.invalidate();
                 String navi = null;
                 navi = "tl";
+
+                // Send message 'tr' via BT
                 outgoingMessage(navi);
                 //ragment.sendMsg("tl");
                 //printMessage("L|");
 //                String navi = "L|";
 //                byte[] bytes = navi.getBytes(Charset.defaultCharset());
 //                BluetoothChatService.write(bytes);
+
+                // Show Popup message
                 Toast.makeText(MainActivity.this, "Turn Left",
                         Toast.LENGTH_SHORT).show();
                 if (robot.getX() != -1 && robot.getY() != -1){
+
+                    // Show coordinates and direction in textView
                     txtX.setText(String.valueOf(robot.getX()));
                     txtY.setText(String.valueOf(robot.getY()));
                     txtDir.setText(String.valueOf(robot.getDirection()));
                 }else{
+
+                    // Show -- in textView
                     txtX.setText("-");
                     txtY.setText("-");
                     txtDir.setText("-");
@@ -142,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Turn right
+        // Turn right
         findViewById(R.id.btnRight).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -150,19 +167,27 @@ public class MainActivity extends AppCompatActivity {
                 mapGrid.invalidate();
                 String navi = null;
                 navi = "tr";
+
+                // Send message 'tr' via BT
                 outgoingMessage(navi);
                 //fragment.sendMsg("tr");
                 //printMessage("R|");
 //                String navi = "R|";
 //                byte[] bytes = navi.getBytes(Charset.defaultCharset());
 //                BluetoothChatService.write(bytes);
+
+                // Show Popup message
                 Toast.makeText(MainActivity.this, "Turn Right",
                         Toast.LENGTH_SHORT).show();
                 if (robot.getX() != -1 && robot.getY() != -1){
+
+                    // Show coordinates and direction in textView
                     txtX.setText(String.valueOf(robot.getX()));
                     txtY.setText(String.valueOf(robot.getY()));
                     txtDir.setText(String.valueOf(robot.getDirection()));
                 }else{
+
+                    // Show -- in textView
                     txtX.setText("-");
                     txtY.setText("-");
                     txtDir.setText("-");
@@ -173,60 +198,33 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-            gyroscope.setListener(new Gyroscope.Listener() {
-                @Override
-                public void onRotation(float rx, float ry, float rz) {
-                    if(rx<-1.0f){
-                        if(listen.getValue() !="Move" ){
-                            listen.setValue("Move");
-                        }
-                    }
-                    else if (rx>1.0f){
-                        if(listen.getValue() != "Default" ){
-                            listen.setValue("Default");
-                        }
-                    }
-                    else if(rz<-1.0f){
-                        if(listen.getValue() !="Right" ){
-                            listen.setValue("Right");
-                        }
-                    }
-                    else if (rz>1.0f){
-                        if(listen.getValue() !="Left" ){
-                            listen.setValue("Left");
-                        }
-                    }
-                }
-            });
 
-
-
-        listen.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                if(s == "Move"){
-                    if (robot.getX() != -1 && robot.getY() != -1) {
-                        robot.moveRobotForward();
-                        mapGrid.invalidate();
-                        txtX.setText(String.valueOf(robot.getX()));
-                        txtY.setText(String.valueOf(robot.getY()));
-                        txtDir.setText(String.valueOf(robot.getDirection()));
-                    }
-                    Log.d("MainActivity", "MOVE ");
-                }else if (s=="Left"){
-                    if (robot.getX() != -1 && robot.getY() != -1) {
-                        robot.moveRobotTurnLeft();
-                        mapGrid.invalidate();
-                        txtX.setText(String.valueOf(robot.getX()));
-                        txtY.setText(String.valueOf(robot.getY()));
-                        txtDir.setText(String.valueOf(robot.getDirection()));
-                    }
-                    Log.d("MainActivity", "LEFT");
-                }else{
-                    Log.d("MainActivity", "CHANGE VALUE: "+s);
-                }
-            }
-        });
+//        listen.observe(this, new Observer<String>() {
+//            @Override
+//            public void onChanged(String s) {
+//                if(s == "Move"){
+//                    if (robot.getX() != -1 && robot.getY() != -1) {
+//                        robot.moveRobotForward();
+//                        mapGrid.invalidate();
+//                        txtX.setText(String.valueOf(robot.getX()));
+//                        txtY.setText(String.valueOf(robot.getY()));
+//                        txtDir.setText(String.valueOf(robot.getDirection()));
+//                    }
+//                    Log.d("MainActivity", "MOVE ");
+//                }else if (s=="Left"){
+//                    if (robot.getX() != -1 && robot.getY() != -1) {
+//                        robot.moveRobotTurnLeft();
+//                        mapGrid.invalidate();
+//                        txtX.setText(String.valueOf(robot.getX()));
+//                        txtY.setText(String.valueOf(robot.getY()));
+//                        txtDir.setText(String.valueOf(robot.getDirection()));
+//                    }
+//                    Log.d("MainActivity", "LEFT");
+//                }else{
+//                    Log.d("MainActivity", "CHANGE VALUE: "+s);
+//                }
+//            }
+//        });
     }
 
     public void outgoingMessage(String sendMsg) {
@@ -310,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static boolean exploreTarget(int obstacleNumber, int targetID){
-        // if obstacle number exists in map
+        // if obstacle number exists in map, reduce the biggest obstacle number by 1
         if (1 <= obstacleNumber && obstacleNumber <= Map.getInstance().getObstacles().size()){
             Obstacle obstacle = Map.getInstance().getObstacles().get(obstacleNumber - 1);
             obstacle.explore(targetID);
@@ -321,31 +319,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void updateRobotStatus(String status){
+        // show robot status in textView
         robot.setStatus(status);
         txtRobotStatus.setText(robot.getStatus());
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //gyroscope.register();
+    public static void updateImage(String imageId){
+        // show robot status in textView
+        txtImage.setText(imageId);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        gyroscope.unregister();
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        //gyroscope.register();
+//    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-//        Resources res = getResources();
-//        String[] menuOptions = res.getStringArray(R.array.bluetooth_menu);
-//        for (int i = 0; i<menuOptions.length; i++){
-//            menu.add(0, i, 0, menuOptions[i]).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-//        }
-        return true;
-    }
+//    @Override
+////    public boolean onCreateOptionsMenu(Menu menu) {
+////        getMenuInflater().inflate(R.menu.main, menu);
+//////        Resources res = getResources();
+//////        String[] menuOptions = res.getStringArray(R.array.bluetooth_menu);
+//////        for (int i = 0; i<menuOptions.length; i++){
+//////            menu.add(0, i, 0, menuOptions[i]).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
+//////        }
+////        return true;
+////    }
 
 }
