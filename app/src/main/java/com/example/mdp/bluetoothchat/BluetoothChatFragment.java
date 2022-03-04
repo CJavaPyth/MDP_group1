@@ -44,7 +44,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-
 import com.example.mdp.MainActivity;
 import com.example.mdp.MapGrid;
 import com.example.mdp.R;
@@ -351,7 +350,7 @@ public class BluetoothChatFragment extends Fragment {
                         // construct a string from the valid bytes in the buffer
 
                         boolean messageIsCommand = false;
-                        if (readMessage.split(",")[0].equals("ROBOT")) {
+                        if (readMessage.split(",")[0].equals("MOVE")) {
                             String[] splitString = readMessage.split(",");
                             if (splitString.length == 4 && isInteger(splitString[1]) && isInteger(splitString[2]) && splitString[3].length() == 1) {
                                 if (MainActivity.setRobotPosition(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]), splitString[3].charAt(0))) {

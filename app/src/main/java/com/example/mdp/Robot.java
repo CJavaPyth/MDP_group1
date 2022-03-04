@@ -125,7 +125,7 @@ public class Robot implements ICoordinate{
             }
             else{
                 // robotDir == 'W'
-                this .setDirection('N');
+                this.setDirection('N');
             }
         }
     }

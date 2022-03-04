@@ -282,6 +282,13 @@
                 android:orientation="vertical"
                 android:layout_marginEnd="5dp">
 
+                <Button
+                    android:id="@+id/btnSendObstacleData"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Obstacle"
+                    android:textColor="@android:color/white" />
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintButtons"
                     android:layout_width="match_parent"

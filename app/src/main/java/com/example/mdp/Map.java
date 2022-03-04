@@ -1,9 +1,10 @@
 package com.example.mdp;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class Map {
-    // Singleton pattern
     private static Map map;
     public static Map getInstance(){
         if (map == null){

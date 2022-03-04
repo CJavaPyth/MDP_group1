@@ -2,7 +2,7 @@ package com.example.mdp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import com.google.gson.Gson;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.graphics.Color;
@@ -10,6 +10,7 @@ import android.hardware.Sensor;
 import android.icu.text.Transliterator;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -34,18 +35,23 @@ import androidx.lifecycle.Observer;
 import com.example.mdp.bluetoothchat.BluetoothChatFragment;
 import com.example.mdp.bluetoothchat.BluetoothChatService;
 
+import org.json.JSONObject;
+
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String TAG = "MainActivity";
-    static Robot robot = new Robot();
+    public static Robot robot = new Robot();
     MutableLiveData<String> listen = new MutableLiveData<>();
     public static TextView txtX;
     public static TextView txtY;
     public static TextView txtDir;
     public static TextView txtRobotStatus;
     public static TextView txtImage;
+    public static Button obstacleBtn;
     private static MapGrid mapGrid;
     BluetoothChatFragment fragment;
 
@@ -71,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         txtRobotStatus = findViewById(R.id.txtRobotStatus);
 
         txtImage = findViewById(R.id.txtImage);
+
+        obstacleBtn = findViewById(R.id.btnSendObstacleData);
 
         // Remove shadow of action bar
         // getSupportActionBar().setElevation(0);
@@ -120,6 +128,28 @@ public class MainActivity extends AppCompatActivity {
                         txtDir.setText("-");
                     }
 
+            }
+        });
+
+        findViewById(R.id.btnSendObstacleData).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Obstacle> obstaclesData = Map.getInstance().getObstacles();
+                // Send message 'tr' via BT
+                // ;
+                String obstacles = new Gson().toJson(obstaclesData);
+                Toast.makeText(MainActivity.this, obstacles,
+                        Toast.LENGTH_SHORT).show();
+                //String obstacleString = TextUtils.join(",", obstaclesData);
+                outgoingMessage(obstacles);
+                mapGrid.invalidate();
+                //fragment.sendMsg("f");
+                //printMessage("F|");
+//                    String navi = "F|";
+//                    byte[] bytes = navi.getBytes(Charset.defaultCharset());
+//                    BluetoothChatService.write(bytes);
+
+                // Show Popup message
             }
         });
 
@@ -322,6 +352,16 @@ public class MainActivity extends AppCompatActivity {
         // show robot status in textView
         robot.setStatus(status);
         txtRobotStatus.setText(robot.getStatus());
+    }
+
+    public static void moveRobot(String movement) {
+        if (movement == "l") {
+            robot.moveRobotTurnLeft();
+        } else if (movement == "r") {
+            robot.moveRobotTurnRight();
+        } else {
+            robot.moveRobotForward();
+        }
     }
 
     public static void updateImage(String imageId){
