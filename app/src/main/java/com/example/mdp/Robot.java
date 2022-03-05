@@ -91,7 +91,35 @@ public class Robot implements ICoordinate{
             }
         }
     }
+    public void moveRobotBackward(){
+        // update robot position one block forward in the mapGrid
 
+        char robotDir = getDirection();
+        if (this.x != -1 && this.y != -1){
+            if(robotDir == 'S'){
+                int newY = this.y + 1;
+                if (newY <= 18){
+                    this.setY(newY);
+                }
+            }else if (robotDir == 'N'){
+                int newY = this.y - 1;
+                if (newY >= 1 ){
+                    this.setY(newY);
+                }
+            }else if (robotDir == 'W'){
+                int newX = this.x + 1;
+                if (newX <= 18){
+                    this.setX(newX);
+                }
+            }else{
+                // robotDir == 'W'
+                int newX = this.x - 1;
+                if (newX >= 1){
+                    this.setX(newX);
+                }
+            }
+        }
+    }
     public void moveRobotTurnLeft(){
         if (this.x != -1 && this.y != -1){
             char robotDir = this.getDirection();
