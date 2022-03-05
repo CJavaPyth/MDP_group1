@@ -94,42 +94,7 @@ public class MainActivity extends AppCompatActivity {
             transaction.commit();
         }
 
-        // To move forward
-        findViewById(R.id.btnUp).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    robot.moveRobotForward();
-                    mapGrid.invalidate();
-                    String navi = null;
-                    navi = "f";
 
-                    // Send message 'tr' via BT
-                    outgoingMessage(navi);
-                    //fragment.sendMsg("f");
-                    //printMessage("F|");
-//                    String navi = "F|";
-//                    byte[] bytes = navi.getBytes(Charset.defaultCharset());
-//                    BluetoothChatService.write(bytes);
-
-                    // Show Popup message
-                    Toast.makeText(MainActivity.this, "Move forward",
-                        Toast.LENGTH_SHORT).show();
-                    if (robot.getX() != -1 && robot.getY() != -1) {
-
-                        // Show coordinates and direction in textView
-                        txtX.setText(String.valueOf(robot.getX()));
-                        txtY.setText(String.valueOf(robot.getY()));
-                        txtDir.setText(String.valueOf(robot.getDirection()));
-                    } else {
-
-                        // Show -- in textView
-                        txtX.setText("-");
-                        txtY.setText("-");
-                        txtDir.setText("-");
-                    }
-
-            }
-        });
 
         findViewById(R.id.btnSendObstacleData).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +115,82 @@ public class MainActivity extends AppCompatActivity {
 //                    BluetoothChatService.write(bytes);
 
                 // Show Popup message
+            }
+        });
+
+
+        // To move forward
+        findViewById(R.id.btnUp).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                robot.moveRobotForward();
+                mapGrid.invalidate();
+                String navi = null;
+                navi = "f";
+
+                // Send message 'tr' via BT
+                outgoingMessage(navi);
+                //fragment.sendMsg("f");
+                //printMessage("F|");
+//                    String navi = "F|";
+//                    byte[] bytes = navi.getBytes(Charset.defaultCharset());
+//                    BluetoothChatService.write(bytes);
+
+                // Show Popup message
+                Toast.makeText(MainActivity.this, "Move forward",
+                        Toast.LENGTH_SHORT).show();
+                if (robot.getX() != -1 && robot.getY() != -1) {
+
+                    // Show coordinates and direction in textView
+                    txtX.setText(String.valueOf(robot.getX()));
+                    txtY.setText(String.valueOf(robot.getY()));
+                    txtDir.setText(String.valueOf(robot.getDirection()));
+                } else {
+
+                    // Show -- in textView
+                    txtX.setText("-");
+                    txtY.setText("-");
+                    txtDir.setText("-");
+                }
+
+            }
+        });
+
+
+        // To move backwards
+        findViewById(R.id.btnDown).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                robot.moveRobotBackward();
+                mapGrid.invalidate();
+                String navi = null;
+                navi = "b";
+
+                // Send message 'tr' via BT
+                outgoingMessage(navi);
+                //fragment.sendMsg("f");
+                //printMessage("F|");
+//                    String navi = "F|";
+//                    byte[] bytes = navi.getBytes(Charset.defaultCharset());
+//                    BluetoothChatService.write(bytes);
+
+                // Show Popup message
+                Toast.makeText(MainActivity.this, "Move backward",
+                        Toast.LENGTH_SHORT).show();
+                if (robot.getX() != -1 && robot.getY() != -1) {
+
+                    // Show coordinates and direction in textView
+                    txtX.setText(String.valueOf(robot.getX()));
+                    txtY.setText(String.valueOf(robot.getY()));
+                    txtDir.setText(String.valueOf(robot.getDirection()));
+                } else {
+
+                    // Show -- in textView
+                    txtX.setText("-");
+                    txtY.setText("-");
+                    txtDir.setText("-");
+                }
+
             }
         });
 
