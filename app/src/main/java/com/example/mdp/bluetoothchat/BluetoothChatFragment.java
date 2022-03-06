@@ -352,13 +352,16 @@ public class BluetoothChatFragment extends Fragment {
                         boolean messageIsCommand = false;
                         if (readMessage.split(",")[0].equals("MOVE")) {
                             String[] splitString = readMessage.split(",");
-                            if (splitString.length == 4 && isInteger(splitString[1]) && isInteger(splitString[2]) && splitString[3].length() == 1) {
-                                MainActivity.setRobotPosition(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]), splitString[3].charAt(0));
+                            String[] movements = splitString[1].split(" ");
+                            if (movements.length == 5) {
+                                MainActivity.updateNewCoordinate(Integer.parseInt(movements[0]), Integer.parseInt(movements[1]), Integer.parseInt(movements[2]), Integer.parseInt(movements[3]), movements[4].charAt(0));
                                     // set new robot position
                                     messageIsCommand = true;
                             } else if (splitString.length == 2) {
+                                // ["move","r"]
+                                Log.d(TAG, "handleMessage() called with: msg = [" + splitString[0]+" "+ splitString[1] + "]");
 //                                MainActivity.updateRobotStatus(splitString[1]);
-                                    MainActivity.moveRobot(splitString[1].charAt(0));
+                                    MainActivity.moveRobot(splitString[1]);
 
                                     messageIsCommand = true;
                             }
@@ -366,8 +369,9 @@ public class BluetoothChatFragment extends Fragment {
 
                         } else if (readMessage.split(",")[0].equals("TARGET")) {
                             String[] splitString = readMessage.split(",");
-                            if (splitString.length == 3 && isInteger(splitString[1]) && isInteger(splitString[2])) {
-                                if (MainActivity.exploreTarget(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]))) {
+                            String[] updateObstacle = splitString[1].split(" ");
+                            if (updateObstacle.length == 3) {
+                                if (MainActivity.exploreTarget(Integer.parseInt(updateObstacle[0]), Integer.parseInt(updateObstacle[1]), Integer.parseInt(updateObstacle[2]))) {
                                     messageIsCommand = true;
                                 }
                             }

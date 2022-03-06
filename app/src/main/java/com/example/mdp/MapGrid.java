@@ -312,7 +312,7 @@ public class MapGrid extends View {
                     if ((finalX < 1 || finalX > numColumns) || (finalY < 1 || finalY > numRows)){
                         Map.getInstance().removeObstacle((Obstacle) objectToMove);
                         MainActivity ma = (MainActivity) this.getContext();
-                        ma.outgoingMessage("Removed Obstacle " + ((Obstacle) objectToMove).getNumber());
+                        //ma.outgoingMessage("Removed Obstacle " + ((Obstacle) objectToMove).getNumber());
                         //fragment.sendMsg("Removed Obstacle " + ((Obstacle) objectToMove).getNumber());
                     } else {
                         // If finger is released at a square
@@ -320,7 +320,7 @@ public class MapGrid extends View {
                             objectToMove.setCoordinates(finalX, finalY);
                         }
                         MainActivity ma = (MainActivity) this.getContext();
-                        ma.outgoingMessage("Obstacle " + ((Obstacle) objectToMove).getNumber() + ": (" + objectToMove.getX() + ", " + objectToMove.getY() + ")");
+                        //ma.outgoingMessage("Obstacle " + ((Obstacle) objectToMove).getNumber() + ": (" + objectToMove.getX() + ", " + objectToMove.getY() + ")");
                         //fragment.sendMsg("Obstacle " + ((Obstacle) objectToMove).getNumber() + ": (" + objectToMove.getX() + ", " + objectToMove.getY() + ")");
                     }
                     invalidate();

@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, obstacles,
                         Toast.LENGTH_SHORT).show();
                 //String obstacleString = TextUtils.join(",", obstaclesData);
-                outgoingMessage(obstacles);
+                outgoingMessage("STATE," + obstacles);
                 mapGrid.invalidate();
                 //fragment.sendMsg("f");
                 //printMessage("F|");
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 robot.moveRobotForward();
                 mapGrid.invalidate();
                 String navi = null;
-                navi = "f";
+                navi = "MOVE,f";
 
                 // Send message 'tr' via BT
                 outgoingMessage(navi);
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                 robot.moveRobotBackward();
                 mapGrid.invalidate();
                 String navi = null;
-                navi = "b";
+                navi = "MOVE,b";
 
                 // Send message 'tr' via BT
                 outgoingMessage(navi);
@@ -201,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
                 robot.moveRobotTurnLeft();
                 mapGrid.invalidate();
                 String navi = null;
-                navi = "tl";
+                navi = "MOVE,l";
 
                 // Send message 'tr' via BT
                 outgoingMessage(navi);
@@ -230,6 +230,26 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.btnCenter).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String navi = null;
+                navi = "MOVE,h";
+
+                // Send message 'tr' via BT
+                outgoingMessage(navi);
+                //ragment.sendMsg("tl");
+                //printMessage("L|");
+//                String navi = "L|";
+//                byte[] bytes = navi.getBytes(Charset.defaultCharset());
+//                BluetoothChatService.write(bytes);
+
+                // Show Popup message
+                Toast.makeText(MainActivity.this, "Stop",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
         // Turn right
         findViewById(R.id.btnRight).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -237,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
                 robot.moveRobotTurnRight();
                 mapGrid.invalidate();
                 String navi = null;
-                navi = "tr";
+                navi = "MOVE,r";
 
                 // Send message 'tr' via BT
                 outgoingMessage(navi);
@@ -365,6 +385,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public static void updateNewCoordinate(int up, int down, int left, int right, char direction) {
+        int oldX = robot.getX();
+        int oldY = robot.getY();
+        int newX = oldX + right - left;
+        int newY = oldY + up - down;
+        setRobotPosition(newX, newY, direction);
+    }
+
     public static void setRobotPosition(int x, int y, char direction){
         if (1 <= x && x <= 18 && 1 <= y && y <= 18 && (direction == 'N' || direction == 'S' || direction == 'E' || direction == 'W')){
             robot.setCoordinates(x, y);
@@ -378,13 +406,14 @@ public class MainActivity extends AppCompatActivity {
         //return false;
     }
 
-    public static boolean exploreTarget(int obstacleNumber, int targetID){
+    public static boolean exploreTarget(int x, int y, int targetID){
         // if obstacle number exists in map, reduce the biggest obstacle number by 1
-        if (1 <= obstacleNumber && obstacleNumber <= Map.getInstance().getObstacles().size()){
-            Obstacle obstacle = Map.getInstance().getObstacles().get(obstacleNumber - 1);
-            obstacle.explore(targetID);
-            mapGrid.invalidate();
-            return true;
+        for (Obstacle obstacle :  Map.getInstance().getObstacles()) {
+            if (obstacle.getX() == x && obstacle.getY() == y) {
+                obstacle.explore(targetID);
+                mapGrid.invalidate();
+                return true;
+            }
         }
         return false;
     }
@@ -395,8 +424,9 @@ public class MainActivity extends AppCompatActivity {
         txtRobotStatus.setText(robot.getStatus());
     }
 
-    public static void moveRobot(char movement) {
-        if (movement == 'l') {
+    public static void moveRobot(String movement) {
+        Log.d(TAG, "moveRobot: "+ movement);
+        if (movement == "l") {
             robot.moveRobotTurnLeft();
             mapGrid.invalidate();
             if (robot.getX() != -1 && robot.getY() != -1) {
@@ -412,7 +442,7 @@ public class MainActivity extends AppCompatActivity {
                 txtY.setText("-");
                 txtDir.setText("-");
             }
-        } else if (movement == 'r') {
+        } else if (movement == "r") {
             robot.moveRobotTurnRight();
             mapGrid.invalidate();
             if (robot.getX() != -1 && robot.getY() != -1) {
@@ -428,7 +458,7 @@ public class MainActivity extends AppCompatActivity {
                 txtY.setText("-");
                 txtDir.setText("-");
             }
-        } else if (movement == 'f') {
+        } else if (movement == "f") {
             robot.moveRobotForward();
             mapGrid.invalidate();
             if (robot.getX() != -1 && robot.getY() != -1) {
