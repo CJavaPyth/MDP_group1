@@ -365,7 +365,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public static boolean setRobotPosition(int x, int y, char direction){
+    public static void setRobotPosition(int x, int y, char direction){
         if (1 <= x && x <= 18 && 1 <= y && y <= 18 && (direction == 'N' || direction == 'S' || direction == 'E' || direction == 'W')){
             robot.setCoordinates(x, y);
             robot.setDirection(direction);
@@ -373,9 +373,9 @@ public class MainActivity extends AppCompatActivity {
             txtY.setText(String.valueOf(robot.getY()));
             txtDir.setText(String.valueOf(robot.getDirection()));
             mapGrid.invalidate();
-            return true;
+            //return true;
         }
-        return false;
+        //return false;
     }
 
     public static boolean exploreTarget(int obstacleNumber, int targetID){
@@ -395,13 +395,71 @@ public class MainActivity extends AppCompatActivity {
         txtRobotStatus.setText(robot.getStatus());
     }
 
-    public static void moveRobot(String movement) {
-        if (movement == "l") {
+    public static void moveRobot(char movement) {
+        if (movement == 'l') {
             robot.moveRobotTurnLeft();
-        } else if (movement == "r") {
+            mapGrid.invalidate();
+            if (robot.getX() != -1 && robot.getY() != -1) {
+
+                // Show coordinates and direction in textView
+                txtX.setText(String.valueOf(robot.getX()));
+                txtY.setText(String.valueOf(robot.getY()));
+                txtDir.setText(String.valueOf(robot.getDirection()));
+            } else {
+
+                // Show -- in textView
+                txtX.setText("-");
+                txtY.setText("-");
+                txtDir.setText("-");
+            }
+        } else if (movement == 'r') {
             robot.moveRobotTurnRight();
-        } else {
+            mapGrid.invalidate();
+            if (robot.getX() != -1 && robot.getY() != -1) {
+
+                // Show coordinates and direction in textView
+                txtX.setText(String.valueOf(robot.getX()));
+                txtY.setText(String.valueOf(robot.getY()));
+                txtDir.setText(String.valueOf(robot.getDirection()));
+            } else {
+
+                // Show -- in textView
+                txtX.setText("-");
+                txtY.setText("-");
+                txtDir.setText("-");
+            }
+        } else if (movement == 'f') {
             robot.moveRobotForward();
+            mapGrid.invalidate();
+            if (robot.getX() != -1 && robot.getY() != -1) {
+
+                // Show coordinates and direction in textView
+                txtX.setText(String.valueOf(robot.getX()));
+                txtY.setText(String.valueOf(robot.getY()));
+                txtDir.setText(String.valueOf(robot.getDirection()));
+            } else {
+
+                // Show -- in textView
+                txtX.setText("-");
+                txtY.setText("-");
+                txtDir.setText("-");
+            }
+        } else {
+            robot.moveRobotBackward();
+            mapGrid.invalidate();
+            if (robot.getX() != -1 && robot.getY() != -1) {
+
+                // Show coordinates and direction in textView
+                txtX.setText(String.valueOf(robot.getX()));
+                txtY.setText(String.valueOf(robot.getY()));
+                txtDir.setText(String.valueOf(robot.getDirection()));
+            } else {
+
+                // Show -- in textView
+                txtX.setText("-");
+                txtY.setText("-");
+                txtDir.setText("-");
+            }
         }
     }
 

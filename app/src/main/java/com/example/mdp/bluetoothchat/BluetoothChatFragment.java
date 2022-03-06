@@ -353,13 +353,17 @@ public class BluetoothChatFragment extends Fragment {
                         if (readMessage.split(",")[0].equals("MOVE")) {
                             String[] splitString = readMessage.split(",");
                             if (splitString.length == 4 && isInteger(splitString[1]) && isInteger(splitString[2]) && splitString[3].length() == 1) {
-                                if (MainActivity.setRobotPosition(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]), splitString[3].charAt(0))) {
+                                MainActivity.setRobotPosition(Integer.parseInt(splitString[1]), Integer.parseInt(splitString[2]), splitString[3].charAt(0));
+                                    // set new robot position
                                     messageIsCommand = true;
-                                }
                             } else if (splitString.length == 2) {
-                                MainActivity.updateRobotStatus(splitString[1]);
-                                messageIsCommand = true;
+//                                MainActivity.updateRobotStatus(splitString[1]);
+                                    MainActivity.moveRobot(splitString[1].charAt(0));
+
+                                    messageIsCommand = true;
                             }
+                                messageIsCommand = true;
+
                         } else if (readMessage.split(",")[0].equals("TARGET")) {
                             String[] splitString = readMessage.split(",");
                             if (splitString.length == 3 && isInteger(splitString[1]) && isInteger(splitString[2])) {
