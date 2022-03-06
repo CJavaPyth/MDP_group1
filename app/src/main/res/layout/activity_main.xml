@@ -282,12 +282,30 @@
                 android:orientation="vertical"
                 android:layout_marginEnd="5dp">
 
-                <Button
-                    android:id="@+id/btnSendObstacleData"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Obstacle"
-                    android:textColor="@android:color/white" />
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/btnSendObstacleData"
+                        android:layout_width="117dp"
+                        android:layout_height="wrap_content"
+                        android:text="Obstacle"
+                        android:textColor="@android:color/white"
+                        android:textSize="10sp" />
+
+                    <Button
+                        android:id="@+id/btnStart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12sp"
+                        android:layout_weight="1"
+                        android:text="Start"
+                        android:textColor="@android:color/white"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintButtons"
