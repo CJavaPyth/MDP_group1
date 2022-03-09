@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     public static Button obstacleBtn;
     private static MapGrid mapGrid;
     BluetoothChatFragment fragment;
-
+    private int byteSize = 30;
 
 
     @Override
@@ -101,11 +101,21 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 List<Obstacle> obstaclesData = Map.getInstance().getObstacles();
                 String obstacles = new Gson().toJson(obstaclesData);
-                Toast.makeText(MainActivity.this, obstacles,
-                        Toast.LENGTH_SHORT).show();
+
+                //Toast.makeText(MainActivity.this, obstacles,
+                //        Toast.LENGTH_SHORT).show();
                 //String obstacleString = TextUtils.join(",", obstaclesData);
+
                 String preFlight = "STATE," + String.valueOf(obstacles.length());
-                outgoingMessage(preFlight);
+
+                //rightPadding
+                String preFlightPadded = String.format("%" + (-byteSize) + "s", preFlight).replace(' ', ' ');
+
+
+                Toast.makeText(MainActivity.this,preFlightPadded,Toast.LENGTH_SHORT).show();
+
+                outgoingMessage(preFlightPadded);
+
                 mapGrid.invalidate();
 
                 double maxBytes = 1024.0;
