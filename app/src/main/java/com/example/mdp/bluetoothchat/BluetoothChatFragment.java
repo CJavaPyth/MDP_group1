@@ -365,9 +365,8 @@ public class BluetoothChatFragment extends Fragment {
                     byte[] readBuf = (byte[]) msg.obj;
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     readMessage = readMessage.trim();
+                    //Toast.makeText(activity, "Message :" + readMessage + String.valueOf(readBuf.length), Toast.LENGTH_SHORT).show();
 
-                    //Log.d(readBuf.length);
-                    Toast.makeText(activity, "Message :" + readMessage + String.valueOf(readBuf.length), Toast.LENGTH_SHORT).show();
                     if (readBuf.length <= 1024) {
                         // construct a string from the valid bytes in the buffer
 
@@ -378,23 +377,23 @@ public class BluetoothChatFragment extends Fragment {
                             if (movements.length == 5) {
                                 MainActivity.updateNewCoordinate(Integer.parseInt(movements[0]), Integer.parseInt(movements[1]), Integer.parseInt(movements[2]), Integer.parseInt(movements[3]), movements[4].charAt(0));
                                     // set new robot position
-                                    messageIsCommand = true;
+                                    //messageIsCommand = true;
                             } else if (splitString.length == 2) {
                                 // ["move","r"]
                                 Log.d(TAG, "handleMessage() called with: msg = [" + splitString[0]+" "+ splitString[1] + "]");
 //                                MainActivity.updateRobotStatus(splitString[1]);
                                     MainActivity.moveRobot(splitString[1].charAt(0));
 
-                                    messageIsCommand = true;
+                                    //messageIsCommand = true;
                             }
-                                messageIsCommand = true;
+                                //messageIsCommand = true;
 
                         } else if (readMessage.split(",")[0].equals("SEEN")) {
                             String[] splitString = readMessage.split(",");
                             String[] updateObstacle = splitString[1].split(" ");
                             if (updateObstacle.length == 3) {
                                 if (MainActivity.exploreTarget(Integer.parseInt(updateObstacle[0]), Integer.parseInt(updateObstacle[1]), updateObstacle[2])) {
-                                    messageIsCommand = true;
+                                    //messageIsCommand = true;
                                     MainActivity.updateImage(updateObstacle[2]);
                                 }
                             }
@@ -405,6 +404,7 @@ public class BluetoothChatFragment extends Fragment {
 
                        }
                         if (!messageIsCommand) {
+                            Log.d(TAG, "handleMessage: " + readMessage);
                             mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
                         }
                     }
