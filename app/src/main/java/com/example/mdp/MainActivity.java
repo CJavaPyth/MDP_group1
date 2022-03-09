@@ -100,24 +100,36 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 List<Obstacle> obstaclesData = Map.getInstance().getObstacles();
-                // Send message 'tr' via BT
-                // ;
                 String obstacles = new Gson().toJson(obstaclesData);
                 Toast.makeText(MainActivity.this, obstacles,
                         Toast.LENGTH_SHORT).show();
                 //String obstacleString = TextUtils.join(",", obstaclesData);
-                outgoingMessage("STATE," + obstacles);
+                String preFlight = "STATE," + String.valueOf(obstacles.length());
+                outgoingMessage(preFlight);
                 mapGrid.invalidate();
-                //fragment.sendMsg("f");
-                //printMessage("F|");
-//                    String navi = "F|";
-//                    byte[] bytes = navi.getBytes(Charset.defaultCharset());
-//                    BluetoothChatService.write(bytes);
 
-                // Show Popup message
+                double maxBytes = 1024.0;
+
+                //Send actual JSON in chunks of max 1024 bytes defined by maxBytes
+                for(int x = 0; x < (int)(Math.ceil(obstacles.length() / maxBytes));x++){
+                    int iterStart = (int)(x * maxBytes);
+                    int takeLength = obstacles.length() - iterStart > (int)(maxBytes) ? (int)maxBytes : obstacles.length() - iterStart;
+
+                    String chunked = obstacles.substring(iterStart, iterStart + takeLength);
+                    outgoingMessage(chunked);
+                }
             }
         });
 
+        findViewById(R.id.btnStart).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Robot starting",
+                        Toast.LENGTH_SHORT).show();
+                outgoingMessage("START");
+                mapGrid.invalidate();
+            }
+        });
 
         // To move forward
         findViewById(R.id.btnUp).setOnClickListener(new View.OnClickListener() {
@@ -406,7 +418,7 @@ public class MainActivity extends AppCompatActivity {
         //return false;
     }
 
-    public static boolean exploreTarget(int x, int y, int targetID){
+    public static boolean exploreTarget(int x, int y, String targetID){
         // if obstacle number exists in map, reduce the biggest obstacle number by 1
         for (Obstacle obstacle :  Map.getInstance().getObstacles()) {
             if (obstacle.getX() == x && obstacle.getY() == y) {
@@ -424,9 +436,9 @@ public class MainActivity extends AppCompatActivity {
         txtRobotStatus.setText(robot.getStatus());
     }
 
-    public static void moveRobot(String movement) {
+    public static void moveRobot(char movement) {
         Log.d(TAG, "moveRobot: "+ movement);
-        if (movement == "l") {
+        if (movement == 'l') {
             robot.moveRobotTurnLeft();
             mapGrid.invalidate();
             if (robot.getX() != -1 && robot.getY() != -1) {
@@ -442,7 +454,7 @@ public class MainActivity extends AppCompatActivity {
                 txtY.setText("-");
                 txtDir.setText("-");
             }
-        } else if (movement == "r") {
+        } else if (movement == 'r') {
             robot.moveRobotTurnRight();
             mapGrid.invalidate();
             if (robot.getX() != -1 && robot.getY() != -1) {
@@ -458,7 +470,7 @@ public class MainActivity extends AppCompatActivity {
                 txtY.setText("-");
                 txtDir.setText("-");
             }
-        } else if (movement == "f") {
+        } else if (movement == 'f') {
             robot.moveRobotForward();
             mapGrid.invalidate();
             if (robot.getX() != -1 && robot.getY() != -1) {
@@ -495,6 +507,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static void updateImage(String imageId){
         // show robot status in textView
+        Log.d(TAG, "updateImage: " + imageId);
         txtImage.setText(imageId);
     }
 
