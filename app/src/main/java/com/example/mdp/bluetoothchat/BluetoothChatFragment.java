@@ -373,29 +373,39 @@ public class BluetoothChatFragment extends Fragment {
                         boolean messageIsCommand = false;
                         if (readMessage.split(",")[0].equals("MOVE")) {
                             String[] splitString = readMessage.split(",");
-                            String[] movements = splitString[1].split(" ");
-                            if (movements.length == 5) {
-                                MainActivity.updateNewCoordinate(Integer.parseInt(movements[0]), Integer.parseInt(movements[1]), Integer.parseInt(movements[2]), Integer.parseInt(movements[3]), movements[4].charAt(0));
+                            if (splitString.length==2){
+                                String[] movements = splitString[1].split(" ");
+                                if (movements.length == 5) {
+                                    MainActivity.updateNewCoordinate(Integer.parseInt(movements[0]), Integer.parseInt(movements[1]), Integer.parseInt(movements[2]), Integer.parseInt(movements[3]), movements[4].charAt(0));
                                     // set new robot position
                                     //messageIsCommand = true;
-                            } else if (splitString.length == 2) {
-                                // ["move","r"]
-                                Log.d(TAG, "handleMessage() called with: msg = [" + splitString[0]+" "+ splitString[1] + "]");
+                                    //NOT USED
+                                } else if (splitString.length == 2) {
+                                    // ["move","r"]
+                                    Log.d(TAG, "handleMessage() called with: msg = [" + splitString[0]+" "+ splitString[1] + "]");
 //                                MainActivity.updateRobotStatus(splitString[1]);
                                     MainActivity.moveRobot(splitString[1].charAt(0));
 
                                     //messageIsCommand = true;
+                                }
                             }
-                                //messageIsCommand = true;
+                            else {
+                                Toast.makeText(activity, "Invalid length", Toast.LENGTH_SHORT).show();
+                            }
 
                         } else if (readMessage.split(",")[0].equals("SEEN")) {
                             String[] splitString = readMessage.split(",");
-                            String[] updateObstacle = splitString[1].split(" ");
-                            if (updateObstacle.length == 3) {
-                                if (MainActivity.exploreTarget(Integer.parseInt(updateObstacle[0]), Integer.parseInt(updateObstacle[1]), updateObstacle[2])) {
-                                    //messageIsCommand = true;
-                                    MainActivity.updateImage(updateObstacle[2]);
+                            if (splitString.length == 2) {
+                                String[] updateObstacle = splitString[1].split(" ");
+                                if (updateObstacle.length == 3) {
+                                    if (MainActivity.exploreTarget(Integer.parseInt(updateObstacle[0]), Integer.parseInt(updateObstacle[1]), String.valueOf(updateObstacle[2]))) {
+                                        //messageIsCommand = true;
+                                        MainActivity.updateImage(updateObstacle[2]);
+                                    }
                                 }
+                            }
+                            else{
+                                Toast.makeText(activity, "Invalid length", Toast.LENGTH_SHORT).show();
                             }
                        // } else if (readMessage.split(",")[0].equals("SEEN")) {
                       //      String[] splitString = readMessage.split(",");

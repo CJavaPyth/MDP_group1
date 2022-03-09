@@ -182,11 +182,12 @@ public class MapGrid extends View {
 
             //?
             if (obstacle.isExplored()){
-                if (Character.isLetter(obstacle.getTargetID().charAt(0))) {
-                    canvas.drawText(String.format("%s%s%s", obstacle.getTargetID().charAt(0), obstacle.getTargetID().charAt(1), obstacle.getTargetID().charAt(2)), offsetX + (float) (x - 1 + 0.5) * cellWidth, offsetY + cellHeight * (numRows - y) + (cellHeight - textSize) / 2 + textSize, exploredWhiteNumber);
-                } else {
-                    canvas.drawText(String.valueOf(obstacle.getTargetID()), offsetX + (float) (x - 1 + 0.5) * cellWidth, offsetY + cellHeight * (numRows - y) + (cellHeight - textSize) / 2 + textSize, exploredWhiteNumber);
+                int len = obstacle.getTargetID().length();
+                if (len >= 3){
+                     len = 3;
                 }
+                String display = obstacle.getTargetID().substring(0,len);
+                canvas.drawText(display, offsetX + (float) (x - 1 + 0.5) * cellWidth, offsetY + cellHeight * (numRows - y) + (cellHeight - textSize) / 2 + textSize, exploredWhiteNumber);
             } else{
                 canvas.drawText(String.valueOf(obstacle.getNumber()), offsetX + (float) (x - 1 + 0.5) * cellWidth, offsetY + cellHeight * (numRows - y) + (cellHeight - textSize)/2 + textSize, coordNumber);
             }
