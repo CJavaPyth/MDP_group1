@@ -4,7 +4,7 @@ public class Obstacle implements ICoordinate{
     private int x;
     private int y;
     private int number;
-    private int targetID;
+    private String targetID;
     private char side;
     private boolean isExplored;
 
@@ -45,7 +45,7 @@ public class Obstacle implements ICoordinate{
         this.number = number;
     }
 
-    public int getTargetID(){
+    public String getTargetID(){
         return this.targetID;
     }
 
@@ -62,7 +62,7 @@ public class Obstacle implements ICoordinate{
         }
     }
 
-    public void explore(int targetID){
+    public void explore(String targetID){
         this.targetID = targetID;
         isExplored = true;
     }

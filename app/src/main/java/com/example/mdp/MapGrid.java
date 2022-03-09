@@ -71,14 +71,14 @@ public class MapGrid extends View {
         coordinatesPaint.setColor(Color.WHITE);
         coordinatesPaint.setTextSize(20);
         coordinatesPaint.setTextAlign(Paint.Align.CENTER);
-        coordNumber.setColor(Color.WHITE);
+        coordNumber.setColor(Color.BLACK);
         coordNumber.setTextSize(18);
         coordNumber.setTextAlign(Paint.Align.CENTER);
         yellowPaint.setColor(Color.YELLOW);
 
         //?
         exploredWhiteNumber.setColor(Color.WHITE);
-        exploredWhiteNumber.setTextSize(30);
+        exploredWhiteNumber.setTextSize(18);
         exploredWhiteNumber.setTextAlign(Paint.Align.CENTER);
     }
                                                               
@@ -182,7 +182,11 @@ public class MapGrid extends View {
 
             //?
             if (obstacle.isExplored()){
-                canvas.drawText(String.valueOf(obstacle.getTargetID()), offsetX + (float) (x - 1 + 0.5) * cellWidth, offsetY + cellHeight * (numRows - y) + (cellHeight - textSize)/2 + textSize, exploredWhiteNumber);
+                if (Character.isLetter(obstacle.getTargetID().charAt(0))) {
+                    canvas.drawText(String.format("%s%s%s", obstacle.getTargetID().charAt(0), obstacle.getTargetID().charAt(1), obstacle.getTargetID().charAt(2)), offsetX + (float) (x - 1 + 0.5) * cellWidth, offsetY + cellHeight * (numRows - y) + (cellHeight - textSize) / 2 + textSize, exploredWhiteNumber);
+                } else {
+                    canvas.drawText(String.valueOf(obstacle.getTargetID()), offsetX + (float) (x - 1 + 0.5) * cellWidth, offsetY + cellHeight * (numRows - y) + (cellHeight - textSize) / 2 + textSize, exploredWhiteNumber);
+                }
             } else{
                 canvas.drawText(String.valueOf(obstacle.getNumber()), offsetX + (float) (x - 1 + 0.5) * cellWidth, offsetY + cellHeight * (numRows - y) + (cellHeight - textSize)/2 + textSize, coordNumber);
             }
@@ -337,7 +341,7 @@ public class MapGrid extends View {
         obstacle.setSide(side);
         invalidate();
         MainActivity ma = (MainActivity) this.getContext();
-        ma.outgoingMessage("Obstacle " + obstacle.getNumber() + ": (" + obstacle.getX() + ", " + obstacle.getY() + "), " + obstacle.getSide());
+        //ma.outgoingMessage("Obstacle " + obstacle.getNumber() + ": (" + obstacle.getX() + ", " + obstacle.getY() + "), " + obstacle.getSide());
         //fragment.sendMsg("Obstacle " + obstacle.getNumber() + ": (" + obstacle.getX() + ", " + obstacle.getY() + "), " + obstacle.getSide());
     }
 

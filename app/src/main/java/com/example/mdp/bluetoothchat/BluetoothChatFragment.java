@@ -15,7 +15,6 @@
  */
 
 package com.example.mdp.bluetoothchat;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -242,8 +241,19 @@ public class BluetoothChatFragment extends Fragment {
     /**
      * Sends a message.
      *
-     * @param message A string of text to send.
+     * //@param message A string of text to send.
      */
+
+    public static String leftPadding(String input, char ch, int L){
+        String result = String.format("%" + L + "s", input).replace(' ',ch);
+        return result;
+    }
+
+    public static String rightPadding(String input, char ch, int L){
+        String result = String.format("%-" + L + "s", input).replace(' ',ch);
+        return result;
+    }
+
     private void sendMessage(String message) {
         // Check that we're actually connected before trying anything
         if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
@@ -253,8 +263,18 @@ public class BluetoothChatFragment extends Fragment {
         // Check that there's actually something to send
         if (message.length() > 0) {
             // Get the message bytes and tell the BluetoothChatService to write
+            //char ch = ' ';
+            //int L=5120;
+            //String formattedStr = leftPadding(message,ch, L);
+            //Log.d(formattedStr, "left:");
+            //String formattedStr = rightPadding(message,ch, L);
+            //Log.d(formattedStr, "right:");
+
             byte[] send = message.getBytes();
+
             mChatService.write(send);
+
+
 
             // Reset out string buffer to zero and clear the edit text field
             mOutStringBuffer.setLength(0);
@@ -361,26 +381,27 @@ public class BluetoothChatFragment extends Fragment {
                                 // ["move","r"]
                                 Log.d(TAG, "handleMessage() called with: msg = [" + splitString[0]+" "+ splitString[1] + "]");
 //                                MainActivity.updateRobotStatus(splitString[1]);
-                                    MainActivity.moveRobot(splitString[1]);
+                                    MainActivity.moveRobot(splitString[1].charAt(0));
 
                                     messageIsCommand = true;
                             }
                                 messageIsCommand = true;
 
-                        } else if (readMessage.split(",")[0].equals("TARGET")) {
+                        } else if (readMessage.split(",")[0].equals("SEEN")) {
                             String[] splitString = readMessage.split(",");
                             String[] updateObstacle = splitString[1].split(" ");
                             if (updateObstacle.length == 3) {
-                                if (MainActivity.exploreTarget(Integer.parseInt(updateObstacle[0]), Integer.parseInt(updateObstacle[1]), Integer.parseInt(updateObstacle[2]))) {
+                                if (MainActivity.exploreTarget(Integer.parseInt(updateObstacle[0]), Integer.parseInt(updateObstacle[1]), updateObstacle[2])) {
                                     messageIsCommand = true;
+                                    MainActivity.updateImage(updateObstacle[2]);
                                 }
                             }
-                        } else if (readMessage.split(",")[0].equals("SEEN")) {
-                            String[] splitString = readMessage.split(",");
-                            MainActivity.updateImage(splitString[1]);
-                            messageIsCommand = true;
+                       // } else if (readMessage.split(",")[0].equals("SEEN")) {
+                      //      String[] splitString = readMessage.split(",");
+                      //      MainActivity.updateImage(splitString[1]);
+                       //     messageIsCommand = true;
 
-                        }
+                       }
                         if (!messageIsCommand) {
                             mConversationArrayAdapter.add(mConnectedDeviceName + ":  " + readMessage);
                         }
