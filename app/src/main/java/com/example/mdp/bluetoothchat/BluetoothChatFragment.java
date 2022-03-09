@@ -365,8 +365,10 @@ public class BluetoothChatFragment extends Fragment {
                     byte[] readBuf = (byte[]) msg.obj;
                     String readMessage = new String(readBuf, 0, msg.arg1);
                     readMessage = readMessage.trim();
-                    // Toast.makeText(activity, "Message :" + readMessage + String.valueOf(readBuf.length), Toast.LENGTH_SHORT).show();
-                    if (readBuf.length <= 30) {
+
+                    //Log.d(readBuf.length);
+                    Toast.makeText(activity, "Message :" + readMessage + String.valueOf(readBuf.length), Toast.LENGTH_SHORT).show();
+                    if (readBuf.length <= 1024) {
                         // construct a string from the valid bytes in the buffer
 
                         boolean messageIsCommand = false;
