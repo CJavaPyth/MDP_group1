@@ -15,6 +15,7 @@
  */
 
 package com.example.mdp.bluetoothchat;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
@@ -44,8 +45,14 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import com.example.mdp.MainActivity;
+import com.example.mdp.Map;
 import com.example.mdp.MapGrid;
+import com.example.mdp.Obstacle;
 import com.example.mdp.R;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -70,6 +77,7 @@ public class BluetoothChatFragment extends Fragment {
      */
     private String mConnectedDeviceName = null;
 
+    public List<String> imageIDS = new ArrayList<String>();
     /**
      * Array adapter for the conversation thread
      */
@@ -335,7 +343,9 @@ public class BluetoothChatFragment extends Fragment {
     /**
      * The Handler that gets information back from the BluetoothChatService
      */
+
     private final Handler mHandler = new Handler() {
+        @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
             FragmentActivity activity = getActivity();
@@ -345,6 +355,12 @@ public class BluetoothChatFragment extends Fragment {
                         case BluetoothChatService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
                             mConversationArrayAdapter.clear();
+//                            Map map = Map.getInstance();
+//                            for (Obstacle ob:map.getObstacles()) {
+//                                ob.setExplored(false);
+//                                ob.setTargetID("");
+//                                mapGrid.invalidate();
+//                            }
                             break;
                         case BluetoothChatService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
@@ -395,13 +411,56 @@ public class BluetoothChatFragment extends Fragment {
 
                         } else if (readMessage.split(",")[0].equals("SEEN")) {
                             String[] splitString = readMessage.split(",");
+                            //int imageId=0;
                             if (splitString.length == 2) {
                                 String[] updateObstacle = splitString[1].split(" ");
                                 if (updateObstacle.length == 3) {
-                                    if (MainActivity.exploreTarget(Integer.parseInt(updateObstacle[0]), Integer.parseInt(updateObstacle[1]), String.valueOf(updateObstacle[2]))) {
-                                        //messageIsCommand = true;
-                                        MainActivity.updateImage(updateObstacle[2]);
+                                    if (!imageIDS.contains(updateObstacle[2])) {
+                                        imageIDS.add(updateObstacle[2]);
+                                        if (MainActivity.exploreTarget(Integer.parseInt(updateObstacle[0]), Integer.parseInt(updateObstacle[1]), updateObstacle[2])) {
+                                            //messageIsCommand = true;
+                                            //Log.d(TAG, "Image ID to update: " + imageId);
+                                            MainActivity.updateImage(updateObstacle[2]);
+                                        }
                                     }
+                                    //String image = String.valueOf(updateObstacle[2]);
+
+                                    //Log.d(TAG, "Image: " + image);
+                                    //Log.d(TAG, "Type: " + image.getClass().getSimpleName());
+//                                    //if (image.equals("3")) {
+//                                    //    Log.d(TAG, "Image identified: " + image);
+//                                    //    imageId = 10+Integer.parseInt(image);
+//                                    //    Log.d(TAG, "Image ID: " + imageId);
+//
+////                                    }
+//                                    if (image == "1" || image == "2" || image == "3" || image == "4" || image == "5" || image == "6"|| image == "7"|| image == "8" || image == "9") {
+//                                        imageId = 10+Integer.parseInt(image);
+//                                    } else if (image == "Up" || image == "up") {
+//                                        imageId = 36;
+//                                    } else if (image == "Down" || image == "down") {
+//                                        imageId = 37;
+//                                    } else if (image == "Right" || image == "right") {
+//                                        imageId = 38;
+//                                    } else if (image == "Left" || image == "left") {
+//                                        imageId = 39;
+//                                    } else if (image == "Stop" || image == "stop") {
+//                                        imageId = 40;
+//                                    } else if (image == "A" || image == "B" || image == "C"|| image == "D"|| image == "E"|| image == "F"|| image == "G"|| image == "H") {
+//                                        int ascii = (int)image.charAt(0);
+//                                        Log.d(TAG, "ascii: " + ascii);
+//                                        imageId = ascii - 45;
+//                                    } else if (image == "a" || image == "b" || image == "c"|| image == "d"|| image == "e"|| image == "f"|| image == "g"|| image == "h") {
+//                                        int ascii = (int)image.charAt(0);
+//                                        imageId = ascii - 77;
+//                                    }
+//                                    else if (image == "S" || image == "T"| image == "U" || image == "V" || image == "W" || image == "X" || image == "Y" || image == "Z") {
+//                                        int ascii = (int)image.charAt(0);
+//                                        imageId = ascii - 55;
+//                                    }
+//                                    else if (image == "s" || image == "t"| image == "u" || image == "v" || image == "w" || image == "x" || image == "y" || image == "z") {
+//                                        int ascii = (int)image.charAt(0);
+//                                        imageId = ascii - 87;
+//                                    }
                                 }
                             }
                             else{

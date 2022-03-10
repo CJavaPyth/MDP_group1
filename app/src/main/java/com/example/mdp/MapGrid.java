@@ -179,15 +179,15 @@ public class MapGrid extends View {
             int x = obstacle.getX();
             int y = obstacle.getY();
             canvas.drawRect(offsetX + (x - 1) * cellWidth, offsetY + cellHeight * (numRows - y), offsetX + x * cellWidth, offsetY + cellHeight * (numRows - y + 1), blackPaint);
-
             //?
+
             if (obstacle.isExplored()){
-                int len = obstacle.getTargetID().length();
-                if (len >= 3){
-                     len = 3;
-                }
-                String display = obstacle.getTargetID().substring(0,len);
-                canvas.drawText(display, offsetX + (float) (x - 1 + 0.5) * cellWidth, offsetY + cellHeight * (numRows - y) + (cellHeight - textSize) / 2 + textSize, exploredWhiteNumber);
+                //int len = obstacle.getTargetID().length();
+                //if (len >= 3){
+                //len = 3;
+                canvas.drawText(obstacle.getTargetID(), offsetX + (float) (x - 1 + 0.5) * cellWidth, offsetY + cellHeight * (numRows - y) + (cellHeight - textSize) / 2 + textSize, exploredWhiteNumber);
+
+                //.substring(0,len);
             } else{
                 canvas.drawText(String.valueOf(obstacle.getNumber()), offsetX + (float) (x - 1 + 0.5) * cellWidth, offsetY + cellHeight * (numRows - y) + (cellHeight - textSize)/2 + textSize, coordNumber);
             }

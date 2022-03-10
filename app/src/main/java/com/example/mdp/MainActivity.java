@@ -7,10 +7,8 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.hardware.Sensor;
-import android.icu.text.Transliterator;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.TextUtils;
+import android.os.Handler;;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -134,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.btnStart).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                fragment.imageIDS = new ArrayList<String>();
                 Toast.makeText(MainActivity.this, "Robot starting",
                         Toast.LENGTH_SHORT).show();
                 outgoingMessage("START");
@@ -427,7 +426,6 @@ public class MainActivity extends AppCompatActivity {
         }
         //return false;
     }
-
     public static boolean exploreTarget(int x, int y, String targetID){
         // if obstacle number exists in map, reduce the biggest obstacle number by 1
         for (Obstacle obstacle :  Map.getInstance().getObstacles()) {
@@ -518,7 +516,7 @@ public class MainActivity extends AppCompatActivity {
     public static void updateImage(String imageId){
         // show robot status in textView
         Log.d(TAG, "updateImage: " + imageId);
-        txtImage.setText(imageId);
+        txtImage.setText(String.valueOf(imageId));
     }
 
 //    @Override
