@@ -62,10 +62,20 @@ public class Obstacle implements ICoordinate{
         }
     }
 
+    public void setExplored(Boolean isExploredBool){
+        this.isExplored =isExploredBool;
+    }
+
+    public void setTargetID(String target){
+        this.targetID =target;
+    }
+
     public void explore(String targetID){
         this.targetID = targetID;
         isExplored = true;
     }
+
+
 
     public boolean isExplored(){
         return this.isExplored;

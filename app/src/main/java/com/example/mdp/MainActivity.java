@@ -102,16 +102,12 @@ public class MainActivity extends AppCompatActivity {
                 List<Obstacle> obstaclesData = Map.getInstance().getObstacles();
                 String obstacles = new Gson().toJson(obstaclesData);
 
-                //Toast.makeText(MainActivity.this, obstacles,
-                //        Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this, obstacles,Toast.LENGTH_SHORT).show();
                 //String obstacleString = TextUtils.join(",", obstaclesData);
 
                 String preFlight = "STATE," + String.valueOf(obstacles.length());
-
                 //rightPadding
                 String preFlightPadded = String.format("%" + (-byteSize) + "s", preFlight).replace(' ', ' ');
-
-
                 Toast.makeText(MainActivity.this,preFlightPadded,Toast.LENGTH_SHORT).show();
 
                 outgoingMessage(preFlightPadded);
