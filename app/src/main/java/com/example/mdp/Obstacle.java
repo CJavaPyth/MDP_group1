@@ -15,9 +15,6 @@ public class Obstacle implements ICoordinate{
         this.isExplored = false;
     }
 
-    public void setTargetID(String target){
-        this.targetID = target;
-    }
     public int getX(){
         return this.x;
     }
@@ -69,9 +66,7 @@ public class Obstacle implements ICoordinate{
         this.targetID = targetID;
         isExplored = true;
     }
-    public void setExplored(boolean isExploredBool) {
-        this.isExplored = isExploredBool;
-    }
+
     public boolean isExplored(){
         return this.isExplored;
     }
