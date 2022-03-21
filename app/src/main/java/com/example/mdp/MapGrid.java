@@ -266,6 +266,8 @@ public class MapGrid extends View {
 
                             // set object coordinates to new position after it has been moved
                             objectToMove.setCoordinates(movingX, movingY);
+                            MainActivity.txtX.setText(String.valueOf(movingX));
+                            MainActivity.txtY.setText(String.valueOf(movingY));
                         }
                         invalidate();
                     }
@@ -316,8 +318,12 @@ public class MapGrid extends View {
                         // If finger is released at a square
                         if (!Map.getInstance().isOccupied(finalX, finalY, (Obstacle) objectToMove)) {
                             objectToMove.setCoordinates(finalX, finalY);
+                            MainActivity.txtX.setText(String.valueOf(objectToMove.getX()));
+                            MainActivity.txtY.setText(String.valueOf(objectToMove.getY()));
                         }
                         MainActivity ma = (MainActivity) this.getContext();
+
+
                         //ma.outgoingMessage("Obstacle " + ((Obstacle) objectToMove).getNumber() + ": (" + objectToMove.getX() + ", " + objectToMove.getY() + ")");
                         //fragment.sendMsg("Obstacle " + ((Obstacle) objectToMove).getNumber() + ": (" + objectToMove.getX() + ", " + objectToMove.getY() + ")");
                     }
