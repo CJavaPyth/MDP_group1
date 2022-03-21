@@ -3,39 +3,25 @@ package com.example.mdp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.graphics.Color;
-import android.hardware.Sensor;
 import android.os.Bundle;
-import android.os.Handler;;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 
 import com.example.mdp.bluetoothchat.BluetoothChatFragment;
-import com.example.mdp.bluetoothchat.BluetoothChatService;
 
-import org.json.JSONObject;
-
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
         obstacleBtn = findViewById(R.id.btnSendObstacleData);
 
-        // Remove shadow of action bar
-        // getSupportActionBar().setElevation(0);
 
         // Set layout to shift up when keyboard is open
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
@@ -149,13 +133,8 @@ public class MainActivity extends AppCompatActivity {
                 String navi = null;
                 navi = "MOVE,f";
 
-                // Send message 'tr' via BT
+                // Send message 'f' via BT
                 outgoingMessage(navi);
-                //fragment.sendMsg("f");
-                //printMessage("F|");
-//                    String navi = "F|";
-//                    byte[] bytes = navi.getBytes(Charset.defaultCharset());
-//                    BluetoothChatService.write(bytes);
 
                 // Show Popup message
                 Toast.makeText(MainActivity.this, "Move forward",
@@ -187,13 +166,8 @@ public class MainActivity extends AppCompatActivity {
                 String navi = null;
                 navi = "MOVE,b";
 
-                // Send message 'tr' via BT
+                // Send message 'b' via BT
                 outgoingMessage(navi);
-                //fragment.sendMsg("f");
-                //printMessage("F|");
-//                    String navi = "F|";
-//                    byte[] bytes = navi.getBytes(Charset.defaultCharset());
-//                    BluetoothChatService.write(bytes);
 
                 // Show Popup message
                 Toast.makeText(MainActivity.this, "Move backward",
@@ -224,13 +198,8 @@ public class MainActivity extends AppCompatActivity {
                 String navi = null;
                 navi = "MOVE,l";
 
-                // Send message 'tr' via BT
+                // Send message 'tl' via BT
                 outgoingMessage(navi);
-                //ragment.sendMsg("tl");
-                //printMessage("L|");
-//                String navi = "L|";
-//                byte[] bytes = navi.getBytes(Charset.defaultCharset());
-//                BluetoothChatService.write(bytes);
 
                 // Show Popup message
                 Toast.makeText(MainActivity.this, "Turn Left",
@@ -257,13 +226,8 @@ public class MainActivity extends AppCompatActivity {
                 String navi = null;
                 navi = "MOVE,h";
 
-                // Send message 'tr' via BT
+                // Send message 'stop' via BT
                 outgoingMessage(navi);
-                //ragment.sendMsg("tl");
-                //printMessage("L|");
-//                String navi = "L|";
-//                byte[] bytes = navi.getBytes(Charset.defaultCharset());
-//                BluetoothChatService.write(bytes);
 
                 // Show Popup message
                 Toast.makeText(MainActivity.this, "Stop",
@@ -282,11 +246,6 @@ public class MainActivity extends AppCompatActivity {
 
                 // Send message 'tr' via BT
                 outgoingMessage(navi);
-                //fragment.sendMsg("tr");
-                //printMessage("R|");
-//                String navi = "R|";
-//                byte[] bytes = navi.getBytes(Charset.defaultCharset());
-//                BluetoothChatService.write(bytes);
 
                 // Show Popup message
                 Toast.makeText(MainActivity.this, "Turn Right",
@@ -307,36 +266,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-//        listen.observe(this, new Observer<String>() {
-//            @Override
-//            public void onChanged(String s) {
-//                if(s == "Move"){
-//                    if (robot.getX() != -1 && robot.getY() != -1) {
-//                        robot.moveRobotForward();
-//                        mapGrid.invalidate();
-//                        txtX.setText(String.valueOf(robot.getX()));
-//                        txtY.setText(String.valueOf(robot.getY()));
-//                        txtDir.setText(String.valueOf(robot.getDirection()));
-//                    }
-//                    Log.d("MainActivity", "MOVE ");
-//                }else if (s=="Left"){
-//                    if (robot.getX() != -1 && robot.getY() != -1) {
-//                        robot.moveRobotTurnLeft();
-//                        mapGrid.invalidate();
-//                        txtX.setText(String.valueOf(robot.getX()));
-//                        txtY.setText(String.valueOf(robot.getY()));
-//                        txtDir.setText(String.valueOf(robot.getDirection()));
-//                    }
-//                    Log.d("MainActivity", "LEFT");
-//                }else{
-//                    Log.d("MainActivity", "CHANGE VALUE: "+s);
-//                }
-//            }
-//        });
     }
 
     public void outgoingMessage(String sendMsg) {
@@ -422,9 +351,7 @@ public class MainActivity extends AppCompatActivity {
             txtY.setText(String.valueOf(robot.getY()));
             txtDir.setText(String.valueOf(robot.getDirection()));
             mapGrid.invalidate();
-            //return true;
         }
-        //return false;
     }
     public static boolean exploreTarget(int x, int y, String targetID){
         // if obstacle number exists in map, reduce the biggest obstacle number by 1
@@ -518,22 +445,5 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "updateImage: " + imageId);
         txtImage.setText(String.valueOf(imageId));
     }
-
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//        //gyroscope.register();
-//    }
-
-//    @Override
-////    public boolean onCreateOptionsMenu(Menu menu) {
-////        getMenuInflater().inflate(R.menu.main, menu);
-//////        Resources res = getResources();
-//////        String[] menuOptions = res.getStringArray(R.array.bluetooth_menu);
-//////        for (int i = 0; i<menuOptions.length; i++){
-//////            menu.add(0, i, 0, menuOptions[i]).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
-//////        }
-////        return true;
-////    }
 
 }

@@ -56,9 +56,6 @@ public class MapGrid extends View {
     public static final int obstacleBoxBottom = 16 - 2;
     public static final int obstacleBoxTop = 16;
 
-    // BluetoothChatFragment for sending strings via bluetooth
-    //private final BluetoothChatFragment fragment = new BluetoothChatFragment();
-
     public MapGrid(Context context){
         this(context, null);
     }
@@ -90,9 +87,6 @@ public class MapGrid extends View {
         // draw white area of canvas
         canvas.drawRoundRect(border, border, width - border - sidebar, height - border, 20, 20, bluePaint);
 
-//        canvas.drawText("Identified:",700,450, blackPaint);
-//        canvas.drawText("Obstacle 1 ",700,480, blackPaint);
-
 
         // draw obstacle box
         drawObstacleBox(canvas);
@@ -111,8 +105,7 @@ public class MapGrid extends View {
     private void calculateDimensions(){
         int sidebarNumOfCells = 4;
         this.width = getWidth();
-        this.height = getHeight();
-//        this.cellWidth = (float) (width - padding*2 - border*2) / (numColumns + 1);
+        this.height = getHeight();;
         this.cellWidth = (float) (width - padding*2 - border*2) / (numColumns + sidebarNumOfCells + 1);
         this.cellHeight = (float) (height - padding*2 - border*2) / (numRows + 1);
         this.offsetX = padding + border + cellWidth;

@@ -223,24 +223,6 @@ public class BluetoothChatFragment extends Fragment {
      *
      * @param message A string of text to send.
      */
-//    public void sendMsg1(String message) {
-//        // Check that we're actually connected before trying anything
-//        if (mChatService != null && mChatService.getState() == BluetoothChatService.STATE_CONNECTED) {
-//                Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
-//                return;
-//        }
-//
-//        // Check that there's actually something to send
-//        if (message.length() > 0) {
-//            // Get the message bytes and tell the BluetoothChatService to write
-//            byte[] send = message.getBytes();
-//            mChatService.write1(send);
-//
-////            // Reset out string buffer to zero and clear the edit text field
-////            mOutStringBuffer.setLength(0);
-////            mOutEditText.setText(mOutStringBuffer);
-//        }
-//    }
 
     public void sendMsg(String message){
         sendMessage(message);
@@ -252,15 +234,6 @@ public class BluetoothChatFragment extends Fragment {
      * //@param message A string of text to send.
      */
 
-    public static String leftPadding(String input, char ch, int L){
-        String result = String.format("%" + L + "s", input).replace(' ',ch);
-        return result;
-    }
-
-    public static String rightPadding(String input, char ch, int L){
-        String result = String.format("%-" + L + "s", input).replace(' ',ch);
-        return result;
-    }
 
     private void sendMessage(String message) {
         // Check that we're actually connected before trying anything
@@ -271,12 +244,6 @@ public class BluetoothChatFragment extends Fragment {
         // Check that there's actually something to send
         if (message.length() > 0) {
             // Get the message bytes and tell the BluetoothChatService to write
-            //char ch = ' ';
-            //int L=5120;
-            //String formattedStr = leftPadding(message,ch, L);
-            //Log.d(formattedStr, "left:");
-            //String formattedStr = rightPadding(message,ch, L);
-            //Log.d(formattedStr, "right:");
 
             byte[] send = message.getBytes();
 
@@ -355,12 +322,6 @@ public class BluetoothChatFragment extends Fragment {
                         case BluetoothChatService.STATE_CONNECTED:
                             setStatus(getString(R.string.title_connected_to, mConnectedDeviceName));
                             mConversationArrayAdapter.clear();
-//                            Map map = Map.getInstance();
-//                            for (Obstacle ob:map.getObstacles()) {
-//                                ob.setExplored(false);
-//                                ob.setTargetID("");
-//                                mapGrid.invalidate();
-//                            }
                             break;
                         case BluetoothChatService.STATE_CONNECTING:
                             setStatus(R.string.title_connecting);
@@ -394,15 +355,11 @@ public class BluetoothChatFragment extends Fragment {
                                 if (movements.length == 5) {
                                     MainActivity.updateNewCoordinate(Integer.parseInt(movements[0]), Integer.parseInt(movements[1]), Integer.parseInt(movements[2]), Integer.parseInt(movements[3]), movements[4].charAt(0));
                                     // set new robot position
-                                    //messageIsCommand = true;
                                     //NOT USED
                                 } else if (splitString.length == 2) {
                                     // ["move","r"]
-                                    Log.d(TAG, "handleMessage() called with: msg = [" + splitString[0]+" "+ splitString[1] + "]");
-//                                MainActivity.updateRobotStatus(splitString[1]);
                                     MainActivity.moveRobot(splitString[1].charAt(0));
 
-                                    //messageIsCommand = true;
                                 }
                             }
                             else {
@@ -418,58 +375,15 @@ public class BluetoothChatFragment extends Fragment {
                                     if (!imageIDS.contains(updateObstacle[2])) {
                                         imageIDS.add(updateObstacle[2]);
                                         if (MainActivity.exploreTarget(Integer.parseInt(updateObstacle[0]), Integer.parseInt(updateObstacle[1]), updateObstacle[2])) {
-                                            //messageIsCommand = true;
                                             //Log.d(TAG, "Image ID to update: " + imageId);
                                             MainActivity.updateImage(updateObstacle[2]);
                                         }
                                     }
-                                    //String image = String.valueOf(updateObstacle[2]);
-
-                                    //Log.d(TAG, "Image: " + image);
-                                    //Log.d(TAG, "Type: " + image.getClass().getSimpleName());
-//                                    //if (image.equals("3")) {
-//                                    //    Log.d(TAG, "Image identified: " + image);
-//                                    //    imageId = 10+Integer.parseInt(image);
-//                                    //    Log.d(TAG, "Image ID: " + imageId);
-//
-////                                    }
-//                                    if (image == "1" || image == "2" || image == "3" || image == "4" || image == "5" || image == "6"|| image == "7"|| image == "8" || image == "9") {
-//                                        imageId = 10+Integer.parseInt(image);
-//                                    } else if (image == "Up" || image == "up") {
-//                                        imageId = 36;
-//                                    } else if (image == "Down" || image == "down") {
-//                                        imageId = 37;
-//                                    } else if (image == "Right" || image == "right") {
-//                                        imageId = 38;
-//                                    } else if (image == "Left" || image == "left") {
-//                                        imageId = 39;
-//                                    } else if (image == "Stop" || image == "stop") {
-//                                        imageId = 40;
-//                                    } else if (image == "A" || image == "B" || image == "C"|| image == "D"|| image == "E"|| image == "F"|| image == "G"|| image == "H") {
-//                                        int ascii = (int)image.charAt(0);
-//                                        Log.d(TAG, "ascii: " + ascii);
-//                                        imageId = ascii - 45;
-//                                    } else if (image == "a" || image == "b" || image == "c"|| image == "d"|| image == "e"|| image == "f"|| image == "g"|| image == "h") {
-//                                        int ascii = (int)image.charAt(0);
-//                                        imageId = ascii - 77;
-//                                    }
-//                                    else if (image == "S" || image == "T"| image == "U" || image == "V" || image == "W" || image == "X" || image == "Y" || image == "Z") {
-//                                        int ascii = (int)image.charAt(0);
-//                                        imageId = ascii - 55;
-//                                    }
-//                                    else if (image == "s" || image == "t"| image == "u" || image == "v" || image == "w" || image == "x" || image == "y" || image == "z") {
-//                                        int ascii = (int)image.charAt(0);
-//                                        imageId = ascii - 87;
-//                                    }
                                 }
                             }
                             else{
                                 Toast.makeText(activity, "Invalid length", Toast.LENGTH_SHORT).show();
                             }
-                       // } else if (readMessage.split(",")[0].equals("SEEN")) {
-                      //      String[] splitString = readMessage.split(",");
-                      //      MainActivity.updateImage(splitString[1]);
-                       //     messageIsCommand = true;
 
                        }
                         if (!messageIsCommand) {
@@ -561,28 +475,8 @@ public class BluetoothChatFragment extends Fragment {
                 startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_SECURE);
                 return true;
             }
-//            case R.id.insecure_connect_scan: {
-//                // Launch the DeviceListActivity to see devices and do scan
-//                Intent serverIntent = new Intent(getActivity(), DeviceListActivity.class);
-//                startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE_INSECURE);
-//                return true;
-//            }
-//            case R.id.discoverable: {
-//                // Ensure this device is discoverable by others
-//                ensureDiscoverable();
-//                return true;
-//            }
         }
         return false;
     }
 
-    private boolean isInteger( String input ) {
-        try {
-            Integer.parseInt( input );
-            return true;
-        }
-        catch( NumberFormatException e ) {
-            return false;
-        }
-    }
 }
